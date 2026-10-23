@@ -1,0 +1,30 @@
+{
+  "name": "studysync-ai-educational-suite",
+  "version": "1.0.0",
+  "description": "StudySync - AI Educational Suite: Unified Portal connecting AI Smart Study Planner and AI Interactive Classroom",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "start:planner": "npm --prefix StudySync-AI_Smart_Study_Planner start",
+    "start:classroom": "npm --prefix StudySync-AI_Interactive_Classroom start",
+    "start:all": "node scripts/start-all.js"
+  },
+  "keywords": [
+    "studysync",
+    "ai-education",
+    "study-planner",
+    "interactive-classroom",
+    "edtech",
+    "gemini-ai",
+    "suite"
+  ],
+  "author": "StudySync Educational Suite Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0"
+  }
+}

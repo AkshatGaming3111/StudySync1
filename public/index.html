@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>StudySync - AI Educational Suite</title>
+
+  <!-- Favicon Configuration -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="shortcut icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="favicon.svg">
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SLIDING BACKGROUND SYSTEM (Educational Theme)
+       ========================================================================== -->
+  <div class="sliding-background-wrapper" aria-hidden="true">
+    <div class="sliding-bg-layer"></div>
+    <div class="sliding-grid-lines"></div>
+    <div class="formula-grid-pattern"></div>
+    <div class="sliding-beam-1"></div>
+    <div class="sliding-beam-2"></div>
+    
+    <!-- Top Sliding Mathematical & Physics Formula Stream -->
+    <div class="bg-formula-ribbon ribbon-top">
+      <div class="ribbon-track-left">
+        <span>E = mc² ✦ ∇ × B = μ₀J ✦ ∫ eˣ dx = eˣ + C ✦ λ = h/mv ✦ e^{iπ} + 1 = 0 ✦ O(V + E) Dijkstra ✦ ∑ 1/n² = π²/6 ✦ PV = nRT ✦ c = 3×10⁸ m/s ✦ E = mc² ✦ ∇ × B = μ₀J ✦ ∫ eˣ dx = eˣ + C ✦ λ = h/mv ✦ e^{iπ} + 1 = 0 ✦ O(V + E) Dijkstra ✦ ∑ 1/n² = π²/6 ✦ PV = nRT ✦ E = mc² ✦ ∇ × B = μ₀J ✦ ∫ eˣ dx = eˣ + C ✦ λ = h/mv ✦ e^{iπ} + 1 = 0 ✦ O(V + E) Dijkstra ✦ ∑ 1/n² = π²/6 ✦ PV = nRT</span>
+      </div>
+    </div>
+    
+    <!-- Bottom Sliding Chemistry & Algorithm Stream -->
+    <div class="bg-formula-ribbon ribbon-bottom">
+      <div class="ribbon-track-right">
+        <span>H₂O + CO₂ ⇌ H₂CO₃ ◆ i² = -1 ◆ sin²θ + cos²θ = 1 ◆ pH = -log[H⁺] ◆ binarySearch → O(log n) ◆ τ = r × F ◆ v = fλ ◆ Euler: V - E + F = 2 ◆ H₂O + CO₂ ⇌ H₂CO₃ ◆ i² = -1 ◆ sin²θ + cos²θ = 1 ◆ pH = -log[H⁺] ◆ binarySearch → O(log n) ◆ τ = r × F ◆ H₂O + CO₂ ⇌ H₂CO₃ ◆ i² = -1 ◆ sin²θ + cos²θ = 1 ◆ pH = -log[H⁺] ◆ binarySearch → O(log n) ◆ τ = r × F</span>
+      </div>
+    </div>
+
+    <!-- Interactive Synaptic Particle Mesh Canvas (Neural Learning Effect) -->
+    <canvas id="synaptic-canvas" class="synaptic-mesh-canvas"></canvas>
+    <!-- Ambient Cursor Spotlight Follower Halo -->
+    <div id="cursor-spotlight-halo" class="cursor-spotlight-halo"></div>
+  </div>
+
+  <!-- ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="suite-navbar">
+    <a href="#" class="nav-brand-link">
+      <img src="favicon.svg" alt="StudySync AI Educational Suite Logo" class="nav-brand-logo">
+      <div class="brand-text-container">
+        <span class="brand-title">Study<span>Sync</span></span>
+        <span class="brand-tagline">AI Educational Suite</span>
+      </div>
+    </a>
+
+    <!-- Center Quick Links -->
+    <ul class="nav-center-menu">
+      <li><a href="#dual-showcase" class="nav-menu-link"><i data-lucide="layers" style="width:16px; height:16px;"></i> The Suite</a></li>
+      <li><a href="#planner-section" class="nav-menu-link"><i data-lucide="calendar" style="width:16px; height:16px;"></i> AI Planner</a></li>
+      <li><a href="#classroom-section" class="nav-menu-link"><i data-lucide="school" style="width:16px; height:16px;"></i> Interactive Classroom</a></li>
+      <li><a href="#skill-radar" class="nav-menu-link"><i data-lucide="crosshair" style="width:16px; height:16px;"></i> Skill Radar</a></li>
+      <li><a href="#student-hub" class="nav-menu-link"><i data-lucide="sparkles" style="width:16px; height:16px;"></i> Student Hub</a></li>
+    </ul>
+
+    <!-- Action Bar: Live Microservice Status & Theme Switcher -->
+    <div class="nav-actions">
+      <div class="status-pill-group" title="Real-time connectivity to both websites">
+        <a href="http://localhost:5000" target="_blank" class="service-indicator" title="StudySync Smart Study Planner">
+          <span class="pulse-dot" id="planner-status-dot"></span>
+          <span id="planner-status-text">Planner: Checking</span>
+        </a>
+        <span style="color: var(--text-muted); font-size: 0.75rem;">|</span>
+        <a href="http://localhost:5001" target="_blank" class="service-indicator" title="StudySync Interactive Classroom">
+          <span class="pulse-dot" id="classroom-status-dot"></span>
+          <span id="classroom-status-text">Classroom: Checking</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==========================================================================
+       CONTINUOUS SLIDING EDUCATIONAL MARQUEE TICKER
+       ========================================================================== -->
+  <div class="academic-sliding-ticker">
+    <div class="ticker-track">
+      <div class="ticker-item"><i data-lucide="cpu"></i> AI Syllabus Decomposition <span class="badge-pill">Gemini Powered</span></div>
+      <div class="ticker-item"><i data-lucide="headphones"></i> Ambient Focus Sanctuary (Rain, Binaural, Lofi)</div>
+      <div class="ticker-item"><i data-lucide="shield-check"></i> Chrome Focus Lock Companion <span class="badge-pill">Manifest V3</span></div>
+      <div class="ticker-item"><i data-lucide="edit-3"></i> SyncBoard Interactive Whiteboard & AI Note Extractor</div>
+      <div class="ticker-item"><i data-lucide="bot"></i> StudyBot 3.0 Socratic AI Co-Pilot</div>
+      <div class="ticker-item"><i data-lucide="file-check"></i> Automated Homework Rubric Grading</div>
+      <div class="ticker-item"><i data-lucide="trophy"></i> AI Diagnostic Examination Arena & XP Podium</div>
+      <!-- Duplicate track for seamless infinite loop -->
+      <div class="ticker-item"><i data-lucide="cpu"></i> AI Syllabus Decomposition <span class="badge-pill">Gemini Powered</span></div>
+      <div class="ticker-item"><i data-lucide="headphones"></i> Ambient Focus Sanctuary (Rain, Binaural, Lofi)</div>
+      <div class="ticker-item"><i data-lucide="shield-check"></i> Chrome Focus Lock Companion <span class="badge-pill">Manifest V3</span></div>
+      <div class="ticker-item"><i data-lucide="edit-3"></i> SyncBoard Interactive Whiteboard & AI Note Extractor</div>
+      <div class="ticker-item"><i data-lucide="bot"></i> StudyBot 3.0 Socratic AI Co-Pilot</div>
+      <div class="ticker-item"><i data-lucide="file-check"></i> Automated Homework Rubric Grading</div>
+      <div class="ticker-item"><i data-lucide="trophy"></i> AI Diagnostic Examination Arena & XP Podium</div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       HERO HEADER SECTION
+       ========================================================================== -->
+  <header class="hero-suite">
+    <div class="suite-badge-pill">
+      <i data-lucide="sparkles" style="width:16px; height:16px; color: #38bdf8;"></i>
+      <span>Next-Generation Unified AI EdTech Ecosystem</span>
+    </div>
+
+    <h1 class="hero-main-title">
+      StudySync — <span class="gradient-title-span">AI Educational Suite</span>
+    </h1>
+
+    <p class="hero-description">
+      One unified gateway bridging deep self-paced study discipline with live virtual classroom collaboration. Connect to your AI Smart Study Planner for laser focus and your AI Interactive Classroom for immersive pedagogical excellence.
+    </p>
+
+    <!-- View Mode Switcher -->
+    <div class="view-mode-selector" role="tablist">
+      <button class="view-mode-btn active" data-mode="split" role="tab">
+        <i data-lucide="columns" style="width:16px; height:16px;"></i> Dual Comparison View
+      </button>
+      <button class="view-mode-btn" data-mode="planner" role="tab">
+        <i data-lucide="calendar" style="width:16px; height:16px;"></i> Focus on Study Planner
+      </button>
+      <button class="view-mode-btn" data-mode="classroom" role="tab">
+        <i data-lucide="school" style="width:16px; height:16px;"></i> Focus on Classroom
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN DUAL SECTIONS SHOWCASE (Website 1 & Website 2)
+       ========================================================================== -->
+  <main class="suite-sections-container" id="dual-showcase">
+    <div class="dual-sections-grid" id="dual-sections-container">
+
+      <!-- ==========================================
+           SECTION 1: AI SMART STUDY PLANNER (Port 5000)
+           ========================================== -->
+      <section class="portal-section-card section-planner spotlight-card" id="planner-section">
+        <!-- Top Bar -->
+        <div class="section-header-bar">
+          <span class="section-badge">
+            <i data-lucide="compass" style="width:14px; height:14px;"></i> Website 1 • Self-Paced Mastery
+          </span>
+          <div class="live-port-tag">
+            <span class="pulse-dot" id="card-planner-dot"></span>
+            <span id="card-planner-status">Port 5000 • Standby</span>
+          </div>
+        </div>
+
+        <!-- Section Title & Description -->
+        <div class="section-content-main">
+          <div class="section-title-wrap">
+            <h2 class="section-title">
+              StudySync — <span class="section-title-highlight">AI Smart Study Planner</span>
+            </h2>
+            <button class="expand-focus-btn" data-target="planner" title="Expand full deep-dive view">
+              <i data-lucide="maximize-2" style="width:14px; height:14px;"></i> <span>Deep Dive View</span>
+            </button>
+          </div>
+          
+          <p class="section-summary-desc">
+            Transform massive, intimidating course syllabi into clean, bite-sized daily schedules. Engineered for self-driven scholars to eliminate procrastination with distraction-free focus rooms, Web Audio soundscapes, and automated screen-time tracking.
+          </p>
+
+          <!-- Interactive Simulated Graphic Widget (Visible in both views) -->
+          <div class="interactive-feature-preview">
+            <div class="preview-graphic-header">
+              <span>AI SYLLABUS DISCIPLINE COCKPIT</span>
+              <div class="graphic-dots"><span></span><span></span><span></span></div>
+            </div>
+            <div class="mini-planner-simulation">
+              <div class="sim-card">
+                <div class="sim-label"><i data-lucide="check-circle-2" style="width:12px; height:12px; color: #38bdf8;"></i> Target Milestone</div>
+                <div class="sim-stat">Finals Prep: 78%</div>
+                <div class="sim-progress-bar"><div class="sim-progress-fill"></div></div>
+              </div>
+              <div class="sim-card">
+                <div class="sim-label"><i data-lucide="clock" style="width:12px; height:12px; color: #10b981;"></i> Deep Work Flow</div>
+                <div class="sim-stat">52m Focus Block</div>
+                <div class="sim-progress-bar"><div class="sim-progress-fill" style="width: 85%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Features Checklist -->
+          <ul class="feature-check-list">
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="sparkles" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>AI Syllabus Deconstructor:</strong> Paste your syllabus or upload lecture documents to generate custom, day-by-day micro-tasks synchronized to exam dates.
+              </div>
+            </li>
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="headphones" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>Distraction-Free Focus Room:</strong> Integrated Pomodoro cycles with synthesized rain, white noise, and 40Hz binaural beats for deep cognitive immersion.
+              </div>
+            </li>
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="shield" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>Focus Lock Chrome Companion:</strong> Manifest V3 companion extension that intercepts distracting tab switches during active study countdowns.
+              </div>
+            </li>
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="bar-chart-2" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>Screen Time & Velocity Analytics:</strong> Live metrics diagnosing daily productivity, task completion velocity, and distraction avoidance rates.
+              </div>
+            </li>
+          </ul>
+
+          <!-- ============================================================
+               EXPANDED DEEP-DIVE CONTENT: AI SMART STUDY PLANNER
+               (Populated and highlighted when focused on Study Planner)
+               ============================================================ -->
+          <div class="deep-dive-block deep-dive-planner">
+            <div class="deep-dive-divider">
+              <span>EXPLORE PLANNER ARCHITECTURE & LIVE TOOLS</span>
+            </div>
+
+            <!-- Deep Dive Tool 1: Interactive Syllabus Breakdown Simulator -->
+            <div class="deep-tool-card">
+              <div class="deep-tool-header">
+                <div>
+                  <div class="deep-tool-badge"><i data-lucide="cpu" style="width:13px; height:13px;"></i> Live AI Sandbox</div>
+                  <h4 class="deep-tool-title">Interactive AI Syllabus Deconstructor</h4>
+                </div>
+                <span class="deep-tool-tag">Gemini 1.5 Flash</span>
+              </div>
+              <p class="deep-tool-desc">
+                Select an academic course below to witness how Gemini AI extracts chapters, balances study workloads, and generates actionable daily micro-schedules:
+              </p>
+
+              <!-- Course Selector Pills -->
+              <div class="course-pills-row">
+                <button class="course-pill active" data-course="calc">📘 AP Calculus BC</button>
+                <button class="course-pill" data-course="dsa">💻 Data Structures & Algorithms</button>
+                <button class="course-pill" data-course="bio">🧬 Molecular Genetics</button>
+                <button class="course-pill" data-course="neuro">🧠 Neuroscience 101</button>
+              </div>
+
+              <!-- Generated Micro-Schedule List -->
+              <div class="schedule-timeline-box" id="planner-schedule-timeline">
+                <!-- Dynamically populated via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Deep Dive Tool 2: Functional Pomodoro & Focus Station -->
+            <div class="deep-tool-card" style="margin-top: 1.5rem;">
+              <div class="deep-tool-header">
+                <div>
+                  <div class="deep-tool-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.3);">
+                    <i data-lucide="timer" style="width:13px; height:13px;"></i> Deep Work Station
+                  </div>
+                  <h4 class="deep-tool-title">Live Focus Room & Pomodoro Engine</h4>
+                </div>
+                <div class="focus-guard-status">
+                  <span class="pulse-dot online"></span>
+                  <span>Companion Guard: Armed</span>
+                </div>
+              </div>
+              
+              <div class="pomodoro-interactive-grid">
+                <div class="pomodoro-clock-panel">
+                  <div class="pomodoro-time-display" id="pomodoro-timer-digits">25:00</div>
+                  <div class="pomodoro-mode-badge" id="pomodoro-current-mode">Focus Sprint (25m)</div>
+                  
+                  <div class="pomodoro-controls-row">
+                    <button class="btn-pomo-ctrl primary" id="pomo-toggle-btn">
+                      <i data-lucide="play" style="width:14px; height:14px;"></i> <span id="pomo-btn-text">Start Focus</span>
+                    </button>
+                    <button class="btn-pomo-ctrl secondary" id="pomo-reset-btn" title="Reset Timer">
+                      <i data-lucide="rotate-ccw" style="width:14px; height:14px;"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="pomodoro-presets-panel">
+                  <div class="preset-label">Preset Focus Cycles:</div>
+                  <div class="presets-btn-group">
+                    <button class="pomo-preset-btn active" data-mins="25" data-label="Focus Sprint">25m Pomodoro</button>
+                    <button class="pomo-preset-btn" data-mins="50" data-label="Deep Work Block">50m Deep Block</button>
+                    <button class="pomo-preset-btn" data-mins="5" data-label="Short Rest">5m Reset Break</button>
+                  </div>
+                  <div class="tab-guard-info-pill">
+                    <i data-lucide="shield-check" style="width:14px; height:14px; color: #38bdf8;"></i>
+                    <span>Tab switches automatically intercepted by Focus Lock Companion extension.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive 4-Pillar Grid -->
+            <div class="deep-pillars-grid">
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">
+                  <i data-lucide="file-text"></i>
+                </div>
+                <h5>Syllabus Deconstruction</h5>
+                <p>Upload multi-page PDFs or syllabus texts. Intelligent chunking categorizes topics by cognitive load and target milestones.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">
+                  <i data-lucide="chrome"></i>
+                </div>
+                <h5>Chrome Focus Lock Companion</h5>
+                <p>Official Manifest V3 extension pairs automatically via localhost handshake to restrict straying to distraction tabs.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                  <i data-lucide="waves"></i>
+                </div>
+                <h5>Web Audio Soundscapes</h5>
+                <p>Synthesizes Rain, White Noise, and 40Hz Gamma waves right in browser memory with zero bulky MP3 buffering.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                  <i data-lucide="activity"></i>
+                </div>
+                <h5>Screen Time Telemetry</h5>
+                <p>Visualizes study velocity curves, daily productivity distribution, and alerts when fatigue thresholds are detected.</p>
+              </div>
+            </div>
+
+            <!-- Scholar Testimonial & System Specs -->
+            <div class="deep-testimonial-card">
+              <div class="testi-quote-mark">“</div>
+              <p class="testi-text">
+                "StudySync Planner turned an 85-page Discrete Mathematics syllabus into 14 daily manageable micro-blocks. Having the Chrome focus guard and binaural soundscapes kept me in flow. My grade jumped from 72% to 94%!"
+              </p>
+              <div class="testi-author">
+                <div class="author-avatar" style="background: #38bdf8;">ER</div>
+                <div>
+                  <div class="author-name">Elena Rostova</div>
+                  <div class="author-role">Computer Science Sophomore • 94% Exam Retention</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Technology & Architecture Badge Strip -->
+            <div class="architecture-specs-strip">
+              <span class="arch-badge">Node.js Express Backend</span>
+              <span class="arch-badge">SQLite Persistent Storage</span>
+              <span class="arch-badge">Google Gemini 1.5 Flash</span>
+              <span class="arch-badge">Chrome Manifest V3 Extension</span>
+              <span class="arch-badge">Web Audio Synthesizer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Switcher Banner (Visible only in focused mode) -->
+        <div class="quick-switch-companion-banner" data-target="classroom">
+          <div class="switch-banner-content">
+            <i data-lucide="school" style="width:18px; height:18px; color: #a855f7;"></i>
+            <span>Looking for collaborative classes & AI co-pilots?</span>
+          </div>
+          <button class="btn-quick-switch" data-target="classroom">
+            <span>Explore Interactive Classroom (Port 5001)</span>
+            <i data-lucide="arrow-right" style="width:14px; height:14px;"></i>
+          </button>
+        </div>
+
+        <!-- Clickable Action Buttons -->
+        <div class="section-actions-grid">
+          <a href="http://localhost:5000" target="_blank" class="btn-primary-launch" id="btn-launch-planner">
+            <span>Launch AI Smart Study Planner</span>
+            <i data-lucide="arrow-up-right" style="width:20px; height:20px;"></i>
+          </a>
+          <div class="sub-links-row">
+            <a href="http://localhost:5000/dashboard.html" target="_blank" class="sub-link-chip">
+              <i data-lucide="layout-dashboard" style="width:14px; height:14px;"></i> Student Dashboard
+            </a>
+            <a href="http://localhost:5000/dashboard.html#focus" target="_blank" class="sub-link-chip">
+              <i data-lucide="headphones" style="width:14px; height:14px;"></i> Focus Room
+            </a>
+            <a href="http://localhost:5000/auth.html" target="_blank" class="sub-link-chip">
+              <i data-lucide="user-check" style="width:14px; height:14px;"></i> Sign In / Register
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           SECTION 2: AI INTERACTIVE CLASSROOM (Port 5001)
+           ========================================== -->
+      <section class="portal-section-card section-classroom spotlight-card" id="classroom-section">
+        <!-- Top Bar -->
+        <div class="section-header-bar">
+          <span class="section-badge">
+            <i data-lucide="users" style="width:14px; height:14px;"></i> Website 2 • Virtual Academy
+          </span>
+          <div class="live-port-tag">
+            <span class="pulse-dot" id="card-classroom-dot"></span>
+            <span id="card-classroom-status">Port 5001 • Standby</span>
+          </div>
+        </div>
+
+        <!-- Section Title & Description -->
+        <div class="section-content-main">
+          <div class="section-title-wrap">
+            <h2 class="section-title">
+              StudySync — <span class="section-title-highlight">AI Interactive Classroom</span>
+            </h2>
+            <button class="expand-focus-btn" data-target="classroom" title="Expand full deep-dive view">
+              <i data-lucide="maximize-2" style="width:14px; height:14px;"></i> <span>Deep Dive View</span>
+            </button>
+          </div>
+
+          <p class="section-summary-desc">
+            An advanced virtual school and real-time pedagogical arena for educators and student cohorts. Features multi-persona AI tutoring, an interactive digital whiteboard with lecture extraction, automated rubric grading, and diagnostic test arenas.
+          </p>
+
+          <!-- Interactive Simulated Graphic Widget -->
+          <div class="interactive-feature-preview">
+            <div class="preview-graphic-header">
+              <span>VIRTUAL CLASSROOM & AI COPILOT HUB</span>
+              <div class="graphic-dots"><span></span><span></span><span></span></div>
+            </div>
+            <div class="mini-planner-simulation">
+              <div class="sim-card">
+                <div class="sim-label"><i data-lucide="award" style="width:12px; height:12px; color: #a855f7;"></i> Classroom XP Podium</div>
+                <div class="sim-stat">#1 Top Ranker: 2,450 XP</div>
+                <div class="sim-progress-bar"><div class="sim-progress-fill"></div></div>
+              </div>
+              <div class="sim-card">
+                <div class="sim-label"><i data-lucide="hash" style="width:12px; height:12px; color: #ec4899;"></i> Active Room</div>
+                <div class="sim-stat">CS101X • Live Stream</div>
+                <div class="sim-progress-bar"><div class="sim-progress-fill" style="width: 95%;"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Key Features Checklist -->
+          <ul class="feature-check-list">
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="bot" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>StudyBot 3.0 AI Classroom Co-Pilot:</strong> Switch between Socratic Coding Mentor, Visual Science Explainer, and Exam Cram Coach with live LaTeX formula rendering.
+              </div>
+            </li>
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="pen-tool" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>SyncBoard Smart Whiteboard:</strong> High-resolution vector drawing canvas with one-click "AI Analyze Board" to convert diagrams into structured lecture notes.
+              </div>
+            </li>
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="clipboard-check" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>Homework & Auto-Grading Studio:</strong> Real-time student AI pre-check hints before submission, plus teacher 1-click rubric evaluation.
+              </div>
+            </li>
+            <li class="feature-check-item">
+              <div class="feature-icon-wrapper"><i data-lucide="zap" style="width:15px; height:15px;"></i></div>
+              <div>
+                <strong>Examination Arena & 1-Click Personas:</strong> Timed test simulations with diagnostic breakdown, plus instant switching between Turing, Franklin, and top students.
+              </div>
+            </li>
+          </ul>
+
+          <!-- ============================================================
+               EXPANDED DEEP-DIVE CONTENT: AI INTERACTIVE CLASSROOM
+               (Populated and highlighted when focused on Classroom)
+               ============================================================ -->
+          <div class="deep-dive-block deep-dive-classroom">
+            <div class="deep-dive-divider">
+              <span>EXPLORE CLASSROOM PEDAGOGY & INTERACTIVE DEMOS</span>
+            </div>
+
+            <!-- Deep Dive Tool 1: 1-Click Persona Simulator -->
+            <div class="deep-tool-card">
+              <div class="deep-tool-header">
+                <div>
+                  <div class="deep-tool-badge" style="background: rgba(168, 85, 247, 0.15); color: #a855f7; border-color: rgba(168, 85, 247, 0.3);">
+                    <i data-lucide="user-check" style="width:13px; height:13px;"></i> 1-Click Persona Bar
+                  </div>
+                  <h4 class="deep-tool-title">StudyBot 3.0 Multi-Persona AI Simulator</h4>
+                </div>
+                <span class="deep-tool-tag" style="background: rgba(236, 72, 153, 0.15); color: #ec4899; border-color: rgba(236, 72, 153, 0.3);">
+                  Socratic Pedagogical Engine
+                </span>
+              </div>
+              <p class="deep-tool-desc">
+                Experience the multi-role virtual classroom. Select a mentor or student persona below to preview their specialized dialogue and reasoning:
+              </p>
+
+              <!-- Persona Pills -->
+              <div class="persona-pills-row">
+                <button class="persona-pill active" data-persona="turing">
+                  👨‍🏫 Dr. Alan Turing <span class="persona-sub">Discrete Math & CS</span>
+                </button>
+                <button class="persona-pill" data-persona="franklin">
+                  👩‍🔬 Prof. Rosalind Franklin <span class="persona-sub">Biophysics & DNA</span>
+                </button>
+                <button class="persona-pill" data-persona="alex">
+                  🥇 Alex Rivera <span class="persona-sub">Top Ranker #1</span>
+                </button>
+                <button class="persona-pill" data-persona="maya">
+                  💡 Maya Chen <span class="persona-sub">Bio-Engineering Explorer</span>
+                </button>
+              </div>
+
+              <!-- Persona Dialogue Box -->
+              <div class="persona-dialogue-box" id="persona-dialogue-content">
+                <!-- Dynamically populated via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Deep Dive Tool 2: SyncBoard Smart Whiteboard with AI Vision Demo -->
+            <div class="deep-tool-card" style="margin-top: 1.5rem;">
+              <div class="deep-tool-header">
+                <div>
+                  <div class="deep-tool-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3);">
+                    <i data-lucide="edit-3" style="width:13px; height:13px;"></i> SyncBoard Vision
+                  </div>
+                  <h4 class="deep-tool-title">Smart Digital Whiteboard & AI Note Extractor</h4>
+                </div>
+                <button class="btn-analyze-board-sim" id="btn-simulate-ai-canvas">
+                  <i data-lucide="sparkles" style="width:14px; height:14px;"></i> <span>Simulate AI Board Analysis</span>
+                </button>
+              </div>
+
+              <div class="whiteboard-demo-container">
+                <!-- Canvas Representation -->
+                <div class="canvas-preview-board" id="canvas-preview-board">
+                  <div class="board-grid-bg"></div>
+                  <!-- Simulated Canvas Drawing Graphics -->
+                  <div class="drawn-diagram-graphic">
+                    <svg viewBox="0 0 400 160" width="100%" height="100%">
+                      <!-- Triangle -->
+                      <polygon points="40,130 160,130 160,40" fill="none" stroke="#38bdf8" stroke-width="3" />
+                      <text x="90" y="145" fill="#94a3b8" font-size="12">Base (a)</text>
+                      <text x="168" y="90" fill="#94a3b8" font-size="12">Height (b)</text>
+                      <text x="80" y="75" fill="#38bdf8" font-size="12">Hypotenuse (c)</text>
+                      <!-- Sine Wave -->
+                      <path d="M 220 90 Q 250 30, 280 90 T 340 90 T 390 90" fill="none" stroke="#ec4899" stroke-width="3" />
+                      <text x="270" y="145" fill="#ec4899" font-size="12">Waveform: A·sin(ωt + φ)</text>
+                    </svg>
+                  </div>
+                  <!-- Scanning Laser Line (active when analyzed) -->
+                  <div class="scanner-laser-line" id="scanner-laser"></div>
+                </div>
+
+                <!-- AI Extraction Output Panel -->
+                <div class="canvas-extraction-result" id="canvas-ai-output">
+                  <div class="result-label"><i data-lucide="check" style="width:13px; height:13px; color:#10b981;"></i> Extracted Concepts & LaTeX:</div>
+                  <div class="extracted-formula-box">
+                    <code>c = √(a² + b²)  &amp;  f(t) = A · sin(ωt + φ)</code>
+                  </div>
+                  <div class="extracted-notes-text">
+                    • <strong>Pythagorean Geometry</strong> verified for Euclidean right-angle vectors.<br>
+                    • <strong>Periodic Oscillation</strong> identified with angular frequency ω. Ready to export to Class Notes!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive Tool 3: Examination Arena Podium & Diagnostic Breakdown -->
+            <div class="deep-tool-card" style="margin-top: 1.5rem;">
+              <div class="deep-tool-header">
+                <div>
+                  <div class="deep-tool-badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">
+                    <i data-lucide="trophy" style="width:13px; height:13px;"></i> Gamified Academy
+                  </div>
+                  <h4 class="deep-tool-title">AI Examination Arena & Live Podium</h4>
+                </div>
+                <div class="active-room-pill">
+                  <span>Room:</span> <strong>CS101X</strong>
+                </div>
+              </div>
+
+              <div class="arena-podium-showcase">
+                <div class="podium-step step-2">
+                  <div class="podium-avatar">🥈</div>
+                  <div class="podium-name">Sophia L.</div>
+                  <div class="podium-xp">2,120 XP</div>
+                  <div class="podium-bar">2nd</div>
+                </div>
+                <div class="podium-step step-1">
+                  <div class="crown-icon">👑</div>
+                  <div class="podium-avatar">🥇</div>
+                  <div class="podium-name">Alex Rivera</div>
+                  <div class="podium-xp">2,450 XP</div>
+                  <div class="podium-bar">1st Place</div>
+                </div>
+                <div class="podium-step step-3">
+                  <div class="podium-avatar">🥉</div>
+                  <div class="podium-name">Liam Chen</div>
+                  <div class="podium-xp">1,980 XP</div>
+                  <div class="podium-bar">3rd</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deep Dive 4-Pillar Grid -->
+            <div class="deep-pillars-grid">
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
+                  <i data-lucide="bot"></i>
+                </div>
+                <h5>StudyBot 3.0 Socratic AI</h5>
+                <p>Multi-persona pedagogical assistant guiding through discovery learning rather than spoon-feeding answers.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(236, 72, 153, 0.15); color: #ec4899;">
+                  <i data-lucide="pen-tool"></i>
+                </div>
+                <h5>SyncBoard Whiteboard</h5>
+                <p>Vector drawing canvas with shape detection, high-resolution PNG export, and Gemini multimodal canvas vision.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                  <i data-lucide="check-circle"></i>
+                </div>
+                <h5>Homework Auto-Grading</h5>
+                <p>Automated teacher rubric evaluations with editable scores and student pre-submission clarity hints.</p>
+              </div>
+
+              <div class="pillar-card">
+                <div class="pillar-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+                  <i data-lucide="zap"></i>
+                </div>
+                <h5>AI Diagnostic Testing Arena</h5>
+                <p>Timed focus exam simulator generating customized problem sets with question-by-question diagnostic keys.</p>
+              </div>
+            </div>
+
+            <!-- Faculty Testimonial & System Specs -->
+            <div class="deep-testimonial-card" style="border-left-color: #a855f7;">
+              <div class="testi-quote-mark" style="color: rgba(168, 85, 247, 0.3);">“</div>
+              <p class="testi-text">
+                "The AI Rubric Auto-Grading and SyncBoard Whiteboard saved our department over 15 hours every week. Students love switching to the Turing persona to dissect discrete math algorithms with instant LaTeX reasoning."
+              </p>
+              <div class="testi-author">
+                <div class="author-avatar" style="background: #a855f7;">MV</div>
+                <div>
+                  <div class="author-name">Dr. Marcus Vance</div>
+                  <div class="author-role">Chair of STEM Education • 100% Cohort Transparency</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Technology & Architecture Badge Strip -->
+            <div class="architecture-specs-strip">
+              <span class="arch-badge">React 18 & Vite Frontend</span>
+              <span class="arch-badge">Tailwind CSS Design System</span>
+              <span class="arch-badge">Express.js API Microservice</span>
+              <span class="arch-badge">KaTeX LaTeX Formula Engine</span>
+              <span class="arch-badge">Multimodal Canvas Vision</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Switcher Banner (Visible only in focused mode) -->
+        <div class="quick-switch-companion-banner" data-target="planner">
+          <div class="switch-banner-content">
+            <i data-lucide="calendar" style="width:18px; height:18px; color: #38bdf8;"></i>
+            <span>Looking for self-paced syllabus planning & deep focus?</span>
+          </div>
+          <button class="btn-quick-switch" data-target="planner">
+            <span>Explore Smart Study Planner (Port 5000)</span>
+            <i data-lucide="arrow-right" style="width:14px; height:14px;"></i>
+          </button>
+        </div>
+
+        <!-- Clickable Action Buttons -->
+        <div class="section-actions-grid">
+          <a href="http://localhost:5001" target="_blank" class="btn-primary-launch" id="btn-launch-classroom">
+            <span>Enter AI Interactive Classroom</span>
+            <i data-lucide="arrow-up-right" style="width:20px; height:20px;"></i>
+          </a>
+          <div class="sub-links-row">
+            <a href="http://localhost:5001" target="_blank" class="sub-link-chip">
+              <i data-lucide="video" style="width:14px; height:14px;"></i> Classroom Hub
+            </a>
+            <a href="http://localhost:5001" target="_blank" class="sub-link-chip">
+              <i data-lucide="edit-3" style="width:14px; height:14px;"></i> SyncBoard Whiteboard
+            </a>
+            <a href="http://localhost:5001" target="_blank" class="sub-link-chip">
+              <i data-lucide="trophy" style="width:14px; height:14px;"></i> Leaderboards & Arena
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       ACADEMIC SKILL RADAR SHOWCASE (5-Axis Cognitive Spider Chart)
+       ========================================================================== -->
+  <section class="skill-radar-section" id="skill-radar">
+    <div class="radar-section-header">
+      <div class="hub-pre-title">Cognitive Synergy &amp; Mastery Spectrum</div>
+      <h2 class="hub-title">Interactive Academic Skill Radar</h2>
+      <p class="radar-subtitle">
+        Visualizing how the <strong>AI Smart Study Planner</strong> and <strong>AI Interactive Classroom</strong> combine to train a balanced, high-retention scholar across 5 core cognitive dimensions.
+      </p>
+
+      <!-- Radar Filter Mode Switcher -->
+      <div class="radar-filter-pills" role="tablist">
+        <button class="radar-filter-pill active" data-filter="synergy">
+          <i data-lucide="sparkles" style="width:14px; height:14px; color: #fbbf24;"></i> Unified Suite Synergy (96.2%)
+        </button>
+        <button class="radar-filter-pill" data-filter="planner">
+          <i data-lucide="compass" style="width:14px; height:14px; color: #38bdf8;"></i> Study Planner Discipline
+        </button>
+        <button class="radar-filter-pill" data-filter="classroom">
+          <i data-lucide="school" style="width:14px; height:14px; color: #a855f7;"></i> Classroom Mastery
+        </button>
+      </div>
+    </div>
+
+    <div class="radar-showcase-container">
+      <!-- Left Card: Interactive Spider Chart Graphic -->
+      <div class="radar-chart-card spotlight-card">
+        <div class="radar-chart-wrap">
+          <svg id="academic-radar-svg" viewBox="0 0 460 460" width="100%" height="100%" class="radar-svg-canvas">
+            <defs>
+              <!-- Planner Gradient Fill -->
+              <linearGradient id="plannerPolyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#6366f1" stop-opacity="0.12" />
+              </linearGradient>
+
+              <!-- Classroom Gradient Fill -->
+              <linearGradient id="classroomPolyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#a855f7" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#ec4899" stop-opacity="0.12" />
+              </linearGradient>
+
+              <!-- Synergy Gradient Fill -->
+              <linearGradient id="synergyPolyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25" />
+                <stop offset="50%" stop-color="#818cf8" stop-opacity="0.2" />
+                <stop offset="100%" stop-color="#ec4899" stop-opacity="0.25" />
+              </linearGradient>
+
+              <filter id="radarNeonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+
+            <!-- Background Concentric Pentagons (Grid Rings) -->
+            <polygon points="230,201 257.6,221 247,253.5 213,253.5 202.4,221" class="radar-ring" />
+            <polygon points="230,172 285.2,212.1 264.1,276.9 195.9,276.9 174.8,212.1" class="radar-ring" />
+            <polygon points="230,143 312.7,203.1 281.1,300.4 178.9,300.4 147.3,203.1" class="radar-ring" />
+            <polygon points="230,114 340.3,194.2 298.2,323.8 161.8,323.8 119.7,194.2" class="radar-ring" />
+            <polygon points="230,85 367.9,185.2 315.2,347.3 144.8,347.3 92.1,185.2" class="radar-outer-ring" />
+
+            <!-- 5 Radial Axis Spoke Lines -->
+            <line x1="230" y1="230" x2="230" y2="85" class="radar-axis-line" id="axis-line-0" />
+            <line x1="230" y1="230" x2="367.9" y2="185.2" class="radar-axis-line" id="axis-line-1" />
+            <line x1="230" y1="230" x2="315.2" y2="347.3" class="radar-axis-line" id="axis-line-2" />
+            <line x1="230" y1="230" x2="144.8" y2="347.3" class="radar-axis-line" id="axis-line-3" />
+            <line x1="230" y1="230" x2="92.1" y2="185.2" class="radar-axis-line" id="axis-line-4" />
+
+            <!-- Polygons -->
+            <!-- 1. Synergy Polygon (Combined 96.2%) -->
+            <polygon id="radar-poly-synergy" points="230,87.9 362.4,187 310.9,341.4 146.5,344.9 100.4,187.9" class="radar-poly synergy" fill="url(#synergyPolyGrad)" filter="url(#radarNeonGlow)" />
+
+            <!-- 2. Planner Polygon -->
+            <polygon id="radar-poly-planner" points="230,179.3 362.4,187 272.6,288.7 146.5,344.9 174.8,212.1" class="radar-poly planner" fill="url(#plannerPolyGrad)" />
+
+            <!-- 3. Classroom Polygon -->
+            <polygon id="radar-poly-classroom" points="230,87.9 292.1,209.8 310.9,341.4 195.9,276.9 100.4,187.9" class="radar-poly classroom" fill="url(#classroomPolyGrad)" />
+
+            <!-- Axis Vertex Hotspots with Interactive Tooltip triggers -->
+            <!-- Axis 0: Algorithmic Reasoning (Top) -->
+            <circle cx="230" cy="87.9" r="6" class="radar-vertex-dot dot-classroom" data-skill="0" />
+            <text x="230" y="58" class="radar-label" text-anchor="middle">🎯 Algorithmic Reasoning</text>
+            <text x="230" y="72" class="radar-sublabel classroom" text-anchor="middle">Classroom • 98%</text>
+
+            <!-- Axis 1: Deep Work Stamina (Top-Right) -->
+            <circle cx="362.4" cy="187" r="6" class="radar-vertex-dot dot-planner" data-skill="1" />
+            <text x="382" y="180" class="radar-label" text-anchor="start">⏳ Deep Work Stamina</text>
+            <text x="382" y="195" class="radar-sublabel planner" text-anchor="start">Planner • 96%</text>
+
+            <!-- Axis 2: Exam Precision & Diagnostic Recall (Bottom-Right) -->
+            <circle cx="310.9" cy="341.4" r="6" class="radar-vertex-dot dot-classroom" data-skill="2" />
+            <text x="330" y="358" class="radar-label" text-anchor="start">📝 Exam Precision &amp; Recall</text>
+            <text x="330" y="373" class="radar-sublabel classroom" text-anchor="start">Classroom • 95%</text>
+
+            <!-- Axis 3: Distraction Resistance (Bottom-Left) -->
+            <circle cx="146.5" cy="344.9" r="6" class="radar-vertex-dot dot-planner" data-skill="3" />
+            <text x="130" y="358" class="radar-label" text-anchor="end">🚫 Distraction Resistance</text>
+            <text x="130" y="373" class="radar-sublabel planner" text-anchor="end">Planner • 98%</text>
+
+            <!-- Axis 4: Visual & Spatial Derivations (Top-Left) -->
+            <circle cx="100.4" cy="187.9" r="6" class="radar-vertex-dot dot-classroom" data-skill="4" />
+            <text x="80" y="180" class="radar-label" text-anchor="end">🎨 Visual &amp; Spatial Derivations</text>
+            <text x="80" y="195" class="radar-sublabel classroom" text-anchor="end">Classroom • 94%</text>
+          </svg>
+
+          <!-- Floating Interactive Vertex Details Card -->
+          <div class="radar-live-indicator-card" id="radar-live-card">
+            <div class="indicator-header">
+              <span class="indicator-tag" id="radar-card-tag">✨ Unified Suite Synergy</span>
+              <span class="indicator-score" id="radar-card-score">96.2% Cognitive Mastery</span>
+            </div>
+            <p class="indicator-desc" id="radar-card-desc">
+              Hover over any axis or skill card to inspect how the two platforms balance cognitive stamina with Socratic problem solving.
+            </p>
+          </div>
+        </div>
+
+        <!-- Legend Bar -->
+        <div class="radar-legend-bar">
+          <div class="legend-item"><span class="legend-dot" style="background:#38bdf8; box-shadow:0 0 10px #38bdf8;"></span> AI Smart Study Planner</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#ec4899; box-shadow:0 0 10px #ec4899;"></span> AI Interactive Classroom</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#10b981; box-shadow:0 0 10px #10b981;"></span> 100% Unified Suite Synergy</div>
+        </div>
+      </div>
+
+      <!-- Right Card: 5-Axis Cognitive Breakdown Cards -->
+      <div class="radar-skills-breakdown">
+        <!-- Skill 1 -->
+        <div class="skill-intel-card" data-skill-idx="0">
+          <div class="skill-intel-head">
+            <div class="skill-title-group">
+              <span class="skill-emoji">🎯</span>
+              <div>
+                <h4 class="skill-name">Algorithmic Reasoning</h4>
+                <span class="skill-platform-badge classroom">AI Interactive Classroom</span>
+              </div>
+            </div>
+            <div class="skill-score-val" style="color: #ec4899;">98%</div>
+          </div>
+          <p class="skill-summary-p">
+            Multi-step deductive logic, formal proof decomposition, and algorithmic complexity. Guided through Socratic questioning via the Dr. Alan Turing AI mentor.
+          </p>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill classroom" style="width: 98%;"></div>
+          </div>
+        </div>
+
+        <!-- Skill 2 -->
+        <div class="skill-intel-card" data-skill-idx="1">
+          <div class="skill-intel-head">
+            <div class="skill-title-group">
+              <span class="skill-emoji">⏳</span>
+              <div>
+                <h4 class="skill-name">Deep Work Stamina</h4>
+                <span class="skill-platform-badge planner">AI Smart Study Planner</span>
+              </div>
+            </div>
+            <div class="skill-score-val" style="color: #38bdf8;">96%</div>
+          </div>
+          <p class="skill-summary-p">
+            Continuous distraction-free cognitive endurance across 25m and 50m Pomodoro blocks, reinforced by built-in Web Audio ambient soundscapes.
+          </p>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill planner" style="width: 96%;"></div>
+          </div>
+        </div>
+
+        <!-- Skill 3 -->
+        <div class="skill-intel-card" data-skill-idx="2">
+          <div class="skill-intel-head">
+            <div class="skill-title-group">
+              <span class="skill-emoji">📝</span>
+              <div>
+                <h4 class="skill-name">Exam Precision &amp; Diagnostic Recall</h4>
+                <span class="skill-platform-badge classroom">AI Interactive Classroom</span>
+              </div>
+            </div>
+            <div class="skill-score-val" style="color: #ec4899;">95%</div>
+          </div>
+          <p class="skill-summary-p">
+            High-speed retrieval under timed focus simulator with question-by-question diagnostic analysis and targeted AI remediation hints.
+          </p>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill classroom" style="width: 95%;"></div>
+          </div>
+        </div>
+
+        <!-- Skill 4 -->
+        <div class="skill-intel-card" data-skill-idx="3">
+          <div class="skill-intel-head">
+            <div class="skill-title-group">
+              <span class="skill-emoji">🚫</span>
+              <div>
+                <h4 class="skill-name">Distraction Resistance</h4>
+                <span class="skill-platform-badge planner">AI Smart Study Planner</span>
+              </div>
+            </div>
+            <div class="skill-score-val" style="color: #38bdf8;">98%</div>
+          </div>
+          <p class="skill-summary-p">
+            Immunity to digital interruptions through the official Chrome Focus Lock companion extension, intercepting stray tab switches during active timers.
+          </p>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill planner" style="width: 98%;"></div>
+          </div>
+        </div>
+
+        <!-- Skill 5 -->
+        <div class="skill-intel-card" data-skill-idx="4">
+          <div class="skill-intel-head">
+            <div class="skill-title-group">
+              <span class="skill-emoji">🎨</span>
+              <div>
+                <h4 class="skill-name">Visual &amp; Spatial Derivations</h4>
+                <span class="skill-platform-badge classroom">AI Interactive Classroom</span>
+              </div>
+            </div>
+            <div class="skill-score-val" style="color: #ec4899;">94%</div>
+          </div>
+          <p class="skill-summary-p">
+            Translating geometric blueprints, chemical structures, and vector diagrams into structured LaTeX lecture notes via SyncBoard multimodal AI vision.
+          </p>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill classroom" style="width: 94%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="student-interest-hub" id="student-hub">
+    <div class="hub-section-header">
+      <div class="hub-pre-title">Student Productivity & Mindset</div>
+      <h2 class="hub-title">Engineered Around Student Interests & Brainflow</h2>
+      <p style="color: var(--text-secondary); max-width: 650px; margin: 0 auto;">
+        Interactive tools grounded in cognitive science to keep you motivated, mentally sharp, and consistently ahead of your academic goals.
+      </p>
+    </div>
+
+    <div class="hub-grid-layout">
+
+      <!-- Widget 1: Interactive Habit Streak Flame -->
+      <div class="student-feature-card spotlight-card">
+        <div>
+          <div class="card-icon-head" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">
+            <i data-lucide="flame"></i>
+          </div>
+          <h3 class="card-title">Study Momentum Streak</h3>
+          <p class="card-desc">
+            Build consistency through micro-habits. Daily check-ins release dopamine rewards and unlock badges across both platforms.
+          </p>
+        </div>
+
+        <div class="streak-interactive-box">
+          <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <div class="streak-flame-icon">🔥</div>
+            <div class="streak-text-content">
+              <h4 id="streak-count-display">7 Days</h4>
+              <span id="streak-badge-text" style="font-size: 0.75rem; color: #f59e0b; font-weight: 600;">🔥 Habit Streak Active</span>
+            </div>
+          </div>
+          <button class="btn-streak-boost" id="streak-boost-btn">
+            Check In Today 🔥
+          </button>
+        </div>
+      </div>
+
+      <!-- Widget 2: Daily Scholar Wisdom & Quote Rotator -->
+      <div class="student-feature-card spotlight-card">
+        <div>
+          <div class="card-icon-head" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
+            <i data-lucide="quote"></i>
+          </div>
+          <h3 class="card-title">Daily Scholar Mindset</h3>
+          <p class="card-desc">
+            Philosophical motivation from the world's greatest thinkers, scientists, and educators to power your study endurance.
+          </p>
+        </div>
+
+        <div style="background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border-glass); border-radius: 16px; padding: 1.2rem;">
+          <p id="quote-display-text" style="font-size: 0.92rem; font-style: italic; color: #e2e8f0; margin-bottom: 0.6rem; min-height: 48px;">
+            "Live as if you were to die tomorrow. Learn as if you were to live forever."
+          </p>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-glass); padding-top: 0.6rem;">
+            <span id="quote-display-author" style="font-size: 0.8rem; font-weight: 700; color: #a855f7;">— Mahatma Gandhi</span>
+            <button id="next-quote-btn" style="background: transparent; border: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; font-weight: 600;">
+              <span>Next Wisdom</span> <i data-lucide="refresh-cw" style="width:12px; height:12px;"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       METRICS & TELEMETRY COUNTER RIBBON
+       ========================================================================== -->
+  <section class="metrics-ribbon-section">
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <span class="metric-number">250+</span>
+        <span class="metric-label">Curriculum Modules</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-number">45.8K+</span>
+        <span class="metric-label">AI Diagnostic Tests</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-number">18,400</span>
+        <span class="metric-label">Focused Study Hours</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-number">98.4%</span>
+        <span class="metric-label">Syllabus Completion</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="suite-footer">
+    <div class="footer-clean-content">
+      <div class="footer-brand-row">
+        <img src="favicon.svg" alt="StudySync Logo" style="width: 30px; height: 30px;">
+        <span style="font-weight: 800; font-size: 1.15rem; color: #ffffff;">StudySync AI</span>
+      </div>
+      <div style="font-size: 0.88rem; color: var(--text-muted);">
+        © 2026 StudySync - AI Educational Suite. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/synaptic.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
