@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 6. Interactive Academic Skill Radar (Spider Chart)
   initAcademicRadarChart();
 
+  // 7. Commercialization, Billing & ROI Calculator
+  initCommercializationAndBilling();
+
   // Enforce permanent dark theme
   document.documentElement.setAttribute('data-theme', 'dark');
   localStorage.removeItem('studysync_suite_theme');
@@ -803,3 +806,433 @@ function initAcademicRadarChart() {
   });
 }
 
+
+
+/* ============================================================================
+   COMMERCIALIZATION, BILLING & ROI CALCULATOR MODULE
+   ============================================================================ */
+
+let activeBillingCycle = 'monthly';
+let selectedCheckoutPlan = 'scholar_pro';
+let appliedCoupon = null;
+let currentCheckoutSessionId = null;
+
+const PLAN_RATES = {
+  scholar_pro: {
+    name: 'Scholar Pro',
+    monthly: 9.99,
+    annualMonthlyEq: 6.50,
+    annualTotal: 78.00,
+    subnoteMonthly: 'Billed monthly ($9.99/mo) • Cancel anytime',
+    subnoteAnnual: 'Billed annually ($78.00/yr) • Save 35% ($6.50/mo eq.)'
+  },
+  study_squad: {
+    name: 'Squad & Campus',
+    monthly: 19.99,
+    annualMonthlyEq: 13.00,
+    annualTotal: 156.00,
+    subnoteMonthly: 'Covers up to 5 students ($3.99/seat eq.)',
+    subnoteAnnual: 'Billed annually ($156.00/yr for 5 seats)'
+  }
+};
+
+function initCommercializationAndBilling() {
+  initRoiCalculator();
+  checkEntitlementStatus();
+
+  // Close modals on escape key or backdrop click
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeCheckoutModal();
+      closeCampusModal();
+    }
+  });
+
+  const checkoutModal = document.getElementById('checkout-modal');
+  if (checkoutModal) {
+    checkoutModal.addEventListener('click', (e) => {
+      if (e.target === checkoutModal) closeCheckoutModal();
+    });
+  }
+
+  const campusModal = document.getElementById('campus-modal');
+  if (campusModal) {
+    campusModal.addEventListener('click', (e) => {
+      if (e.target === campusModal) closeCampusModal();
+    });
+  }
+}
+
+/**
+ * Toggles billing cycle between monthly and annual
+ */
+function switchBillingCycle(cycle) {
+  activeBillingCycle = cycle;
+
+  const btnMonthly = document.getElementById('btn-billing-monthly');
+  const btnAnnual = document.getElementById('btn-billing-annual');
+
+  if (cycle === 'annual') {
+    btnMonthly?.classList.remove('active');
+    btnAnnual?.classList.add('active');
+
+    // Update Pro display
+    const proPrice = document.getElementById('pro-price-display');
+    const proSubnote = document.getElementById('pro-subnote-display');
+    if (proPrice) proPrice.textContent = PLAN_RATES.scholar_pro.annualMonthlyEq.toFixed(2);
+    if (proSubnote) proSubnote.textContent = PLAN_RATES.scholar_pro.subnoteAnnual;
+
+    // Update Squad display
+    const squadPrice = document.getElementById('squad-price-display');
+    const squadSubnote = document.getElementById('squad-subnote-display');
+    if (squadPrice) squadPrice.textContent = PLAN_RATES.study_squad.annualMonthlyEq.toFixed(2);
+    if (squadSubnote) squadSubnote.textContent = PLAN_RATES.study_squad.subnoteAnnual;
+  } else {
+    btnAnnual?.classList.remove('active');
+    btnMonthly?.classList.add('active');
+
+    // Update Pro display
+    const proPrice = document.getElementById('pro-price-display');
+    const proSubnote = document.getElementById('pro-subnote-display');
+    if (proPrice) proPrice.textContent = PLAN_RATES.scholar_pro.monthly.toFixed(2);
+    if (proSubnote) proSubnote.textContent = PLAN_RATES.scholar_pro.subnoteMonthly;
+
+    // Update Squad display
+    const squadPrice = document.getElementById('squad-price-display');
+    const squadSubnote = document.getElementById('squad-subnote-display');
+    if (squadPrice) squadPrice.textContent = PLAN_RATES.study_squad.monthly.toFixed(2);
+    if (squadSubnote) squadSubnote.textContent = PLAN_RATES.study_squad.subnoteMonthly;
+  }
+
+  updateCheckoutSummary();
+
+  if (window.soundEngine) {
+    window.soundEngine.playChime('switch');
+  }
+}
+
+/**
+ * Opens checkout modal for specific plan
+ */
+function openCheckoutModal(planId = 'scholar_pro') {
+  selectedCheckoutPlan = planId;
+  appliedCoupon = null;
+
+  const modal = document.getElementById('checkout-modal');
+  const formView = document.getElementById('modal-checkout-form-view');
+  const successView = document.getElementById('modal-checkout-success-view');
+  const couponInput = document.getElementById('coupon-code-input');
+  const feedback = document.getElementById('coupon-feedback');
+
+  if (couponInput) couponInput.value = '';
+  if (feedback) feedback.style.display = 'none';
+
+  if (formView) formView.style.display = 'block';
+  if (successView) successView.style.display = 'none';
+
+  const modalTitle = document.getElementById('modal-plan-title');
+  if (modalTitle) {
+    modalTitle.innerHTML = planId === 'study_squad'
+      ? '<i data-lucide="users" style="color:#38bdf8;"></i> Activate Squad & Campus Pass'
+      : '<i data-lucide="zap" style="color:#c084fc;"></i> Activate Scholar Pro';
+  }
+
+  updateCheckoutSummary();
+
+  if (modal) {
+    modal.classList.add('open');
+  }
+
+  if (window.lucide) {
+    window.lucide.createIcons();
+  }
+
+  if (window.soundEngine) {
+    window.soundEngine.playChime('launch');
+  }
+}
+
+function closeCheckoutModal() {
+  const modal = document.getElementById('checkout-modal');
+  if (modal) {
+    modal.classList.remove('open');
+  }
+}
+
+/**
+ * Updates checkout modal price summary
+ */
+function updateCheckoutSummary() {
+  const planInfo = PLAN_RATES[selectedCheckoutPlan] || PLAN_RATES.scholar_pro;
+  const nameEl = document.getElementById('summary-plan-name');
+  const cycleEl = document.getElementById('summary-billing-cycle');
+  const totalEl = document.getElementById('summary-total-due');
+  const discountRow = document.getElementById('summary-discount-row');
+  const discountVal = document.getElementById('summary-discount-val');
+
+  if (nameEl) nameEl.textContent = planInfo.name;
+  if (cycleEl) cycleEl.textContent = activeBillingCycle === 'annual' ? 'Annual (Billed Yearly)' : 'Monthly';
+
+  let base = activeBillingCycle === 'annual' ? planInfo.annualTotal : planInfo.monthly;
+  let finalAmount = base;
+
+  if (appliedCoupon && appliedCoupon.valid) {
+    const discount = (base * appliedCoupon.discountPercent) / 100;
+    finalAmount = Math.max(0, base - discount);
+    if (discountRow) discountRow.style.display = 'flex';
+    if (discountVal) discountVal.textContent = `-${appliedCoupon.discountPercent}% (${appliedCoupon.code})`;
+  } else {
+    if (discountRow) discountRow.style.display = 'none';
+  }
+
+  if (totalEl) {
+    totalEl.textContent = `$${finalAmount.toFixed(2)}`;
+  }
+}
+
+/**
+ * Validates promotional coupon via backend API
+ */
+async function applyCouponCode() {
+  const input = document.getElementById('coupon-code-input');
+  const feedback = document.getElementById('coupon-feedback');
+  if (!input || !feedback) return;
+
+  const code = input.value.trim();
+  if (!code) {
+    feedback.textContent = 'Please enter a coupon code';
+    feedback.className = 'coupon-feedback error';
+    feedback.style.display = 'block';
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/billing/verify-coupon', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json();
+
+    if (res.ok && data.valid) {
+      appliedCoupon = data;
+      feedback.textContent = `✓ ${data.description} applied successfully!`;
+      feedback.className = 'coupon-feedback success';
+      feedback.style.display = 'block';
+      updateCheckoutSummary();
+      if (window.soundEngine) window.soundEngine.playChime('ping');
+    } else {
+      appliedCoupon = null;
+      feedback.textContent = data.error || 'Invalid or expired promotional code';
+      feedback.className = 'coupon-feedback error';
+      feedback.style.display = 'block';
+      updateCheckoutSummary();
+    }
+  } catch (err) {
+    feedback.textContent = 'Network error verifying coupon';
+    feedback.className = 'coupon-feedback error';
+    feedback.style.display = 'block';
+  }
+}
+
+/**
+ * Executes instant sandbox/test checkout and activates Pro entitlement
+ */
+async function executeInstantCheckout() {
+  const btn = document.getElementById('btn-submit-checkout');
+  const btnText = document.getElementById('checkout-btn-text');
+  const emailInput = document.getElementById('checkout-email');
+  const email = emailInput?.value || 'scholar@studysync.ai';
+
+  if (btn) btn.disabled = true;
+  if (btnText) btnText.textContent = 'Processing Verification...';
+
+  try {
+    // 1. Create Checkout Session
+    const createRes = await fetch('/api/billing/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        planId: selectedCheckoutPlan,
+        billingCycle: activeBillingCycle,
+        email,
+        couponCode: appliedCoupon?.code || ''
+      })
+    });
+    const sessionData = await createRes.json();
+
+    // 2. Complete instant checkout verification
+    const completeRes = await fetch('/api/billing/complete-test-checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId: sessionData.sessionId })
+    });
+    const result = await completeRes.json();
+
+    // 3. Persist local entitlement
+    localStorage.setItem('studysync_pro_active', 'true');
+    localStorage.setItem('studysync_user_plan', selectedCheckoutPlan);
+
+    // 4. Update UI to success state
+    const formView = document.getElementById('modal-checkout-form-view');
+    const successView = document.getElementById('modal-checkout-success-view');
+    const successTitle = document.getElementById('success-plan-title');
+    const successDesc = document.getElementById('success-plan-desc');
+
+    if (successTitle) {
+      successTitle.textContent = selectedCheckoutPlan === 'study_squad'
+        ? 'Squad & Campus Pass Activated!'
+        : 'Welcome to Scholar Pro!';
+    }
+
+    if (successDesc) {
+      successDesc.textContent = selectedCheckoutPlan === 'study_squad'
+        ? `Your cohort license for 5 students is active for ${email}. Multiplayer SyncBoard rooms, Faculty Rubric Auto-Grading, and Canvas sync are now unlocked.`
+        : `Your Scholar Pro subscription is now active for ${email}. Unlimited syllabus decompositions, Chrome Focus Lock, and SyncBoard AI OCR are ready.`;
+    }
+
+    if (formView) formView.style.display = 'none';
+    if (successView) successView.style.display = 'block';
+
+    // 5. Update Navbar Upgrade Button
+    updateNavbarToProState(true);
+
+    if (window.soundEngine) {
+      window.soundEngine.playChime('launch');
+    }
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  } catch (err) {
+    alert('Verification failed: ' + err.message);
+  } finally {
+    if (btn) btn.disabled = false;
+    if (btnText) btnText.textContent = 'Confirm & Activate Pro';
+  }
+}
+
+/**
+ * Checks saved entitlement on page load
+ */
+function checkEntitlementStatus() {
+  const isPro = localStorage.getItem('studysync_pro_active') === 'true';
+  updateNavbarToProState(isPro);
+}
+
+function updateNavbarToProState(isPro) {
+  const navBtn = document.getElementById('nav-upgrade-btn');
+  const navLabel = document.getElementById('nav-upgrade-label');
+
+  if (navBtn && navLabel) {
+    if (isPro) {
+      navBtn.classList.add('pro-active');
+      navBtn.onclick = () => openCheckoutModal('scholar_pro');
+      navLabel.textContent = '👑 Scholar Pro Active';
+    } else {
+      navBtn.classList.remove('pro-active');
+      navBtn.onclick = () => openCheckoutModal('scholar_pro');
+      navLabel.textContent = 'Upgrade to Pro';
+    }
+  }
+}
+
+/**
+ * Campus Enterprise Inquiry Modal Handlers
+ */
+function openCampusModal() {
+  const modal = document.getElementById('campus-modal');
+  const formView = document.getElementById('modal-campus-form-view');
+  const successView = document.getElementById('modal-campus-success-view');
+
+  if (formView) formView.style.display = 'block';
+  if (successView) successView.style.display = 'none';
+
+  if (modal) {
+    modal.classList.add('open');
+  }
+  if (window.lucide) window.lucide.createIcons();
+  if (window.soundEngine) window.soundEngine.playChime('ping');
+}
+
+function closeCampusModal() {
+  const modal = document.getElementById('campus-modal');
+  if (modal) {
+    modal.classList.remove('open');
+  }
+}
+
+async function submitCampusInquiry() {
+  const name = document.getElementById('campus-name')?.value.trim();
+  const institution = document.getElementById('campus-institution')?.value.trim();
+  const email = document.getElementById('campus-email')?.value.trim();
+  const seats = document.getElementById('campus-seats')?.value;
+  const lms = document.getElementById('campus-lms')?.value;
+
+  if (!name || !institution || !email) {
+    alert('Please complete all required fields (Name, Institution, Email).');
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/billing/enterprise-inquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, institution, email, seats, lms })
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      const formView = document.getElementById('modal-campus-form-view');
+      const successView = document.getElementById('modal-campus-success-view');
+      if (formView) formView.style.display = 'none';
+      if (successView) successView.style.display = 'block';
+      if (window.soundEngine) window.soundEngine.playChime('launch');
+      if (window.lucide) window.lucide.createIcons();
+    } else {
+      alert(data.error || 'Failed to submit inquiry.');
+    }
+  } catch (err) {
+    alert('Network error submitting request: ' + err.message);
+  }
+}
+
+/**
+ * Interactive Academic ROI & Grade-Lift Calculator
+ */
+function initRoiCalculator() {
+  const slider = document.getElementById('roi-hours-slider');
+  const hoursVal = document.getElementById('roi-hours-val');
+  const statLift = document.getElementById('roi-stat-lift');
+  const statSaved = document.getElementById('roi-stat-saved');
+  const statValue = document.getElementById('roi-stat-value');
+
+  if (!slider) return;
+
+  function updateRoi() {
+    const hours = parseInt(slider.value, 10);
+    if (hoursVal) hoursVal.textContent = `${hours} hrs/wk`;
+
+    // Dynamic predictive modeling:
+    // Score lift curves from +14% at 5 hrs to +38% at 45 hrs
+    const scoreLift = Math.min(38.5, 12.0 + (hours * 0.72)).toFixed(1);
+    const timeSaved = (hours * 0.42).toFixed(1);
+    const tutorValue = Math.round(hours * 21.5);
+
+    if (statLift) statLift.textContent = `+${scoreLift}%`;
+    if (statSaved) statSaved.textContent = `${timeSaved} hrs`;
+    if (statValue) statValue.textContent = `$${tutorValue}/mo`;
+  }
+
+  slider.addEventListener('input', updateRoi);
+  updateRoi();
+}
+
+// Expose modal handlers globally for inline HTML onclick attributes
+window.switchBillingCycle = switchBillingCycle;
+window.openCheckoutModal = openCheckoutModal;
+window.closeCheckoutModal = closeCheckoutModal;
+window.applyCouponCode = applyCouponCode;
+window.executeInstantCheckout = executeInstantCheckout;
+window.openCampusModal = openCampusModal;
+window.closeCampusModal = closeCampusModal;
+window.submitCampusInquiry = submitCampusInquiry;

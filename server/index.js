@@ -6,6 +6,7 @@ require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 require('dotenv').config();
 
 const apiRoutes = require('./routes/api');
+const billingRoutes = require('./routes/billing');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use(express.static(publicDir));
 
 // API Routes
 app.use('/api', apiRoutes);
+app.use('/api/billing', billingRoutes);
 
 // Suite Server Health Check
 app.get('/health', (req, res) => {
@@ -44,6 +46,7 @@ app.listen(PORT, () => {
   console.log('🎓 StudySync – AI Educational Suite Central Index Portal');
   console.log(`🌐 Server active on: http://localhost:${PORT}`);
   console.log(`📡 Suite Health Endpoint: http://localhost:${PORT}/health`);
+  console.log(`💳 Billing API: http://localhost:${PORT}/api/billing/plans`);
   console.log(`🔗 Target Website 1 (Planner):   ${process.env.PLANNER_URL || 'http://localhost:5000'}`);
   console.log(`🔗 Target Website 2 (Classroom): ${process.env.CLASSROOM_URL || 'http://localhost:5001'}`);
   console.log('================================================================');
