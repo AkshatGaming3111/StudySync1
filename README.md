@@ -2,7 +2,7 @@
 > **The Unified Gateway Connecting Self-Paced Focus Mastery and Virtual Pedagogical Collaboration**
 
 Welcome to **StudySync - AI Educational Suite** (`http://localhost:3000`), the central index portal and orchestration hub linking two cutting-edge AI-powered academic platforms:
-1. **StudySync – AI Smart Study Planner** (`http://localhost:5000`)
+1. **StudySync – AI Smart Study Planner** (Live: `https://studysync2-virid.vercel.app`)
 2. **StudySync – AI Interactive Classroom** (`http://localhost:5001`)
 
 ---
@@ -18,9 +18,9 @@ Welcome to **StudySync - AI Educational Suite** (`http://localhost:3000`), the c
                                          │
                  ┌───────────────────────┴───────────────────────┐
                  ▼                                               ▼
-  ┌───────────────────────────────┐               ┌───────────────────────────────┐
-  │   AI Smart Study Planner      │               │   AI Interactive Classroom    │
-  │     http://localhost:5000     │               │     http://localhost:5001     │
+  ┌─────────────────────────────────┐               ┌───────────────────────────────┐
+  │   AI Smart Study Planner        │               │   AI Interactive Classroom    │
+  │ studysync2-virid.vercel.app     │               │     http://localhost:5001     │
   ├───────────────────────────────┤               ├───────────────────────────────┤
   │ • AI Syllabus Deconstruction  │               │ • StudyBot 3.0 Co-Pilot       │
   │ • Pomodoro & Ambient Sound    │               │ • SyncBoard Smart Whiteboard  │

@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Periodically polls the backend for live status of both microservices (5000 & 5001)
+ * Periodically polls the backend for live status of both platforms (Planner & Classroom)
  */
 function initServiceHealthMonitoring() {
   const plannerDot = document.getElementById('planner-status-dot');
@@ -71,10 +71,10 @@ function initServiceHealthMonitoring() {
       if (plannerCardDot && plannerCardStatus) {
         if (pOnline) {
           plannerCardDot.className = 'pulse-dot online';
-          plannerCardStatus.textContent = `Online • Port 5000 (${pLatency}ms)`;
+          plannerCardStatus.textContent = `Online • Vercel (${pLatency}ms)`;
         } else {
           plannerCardDot.className = 'pulse-dot';
-          plannerCardStatus.textContent = 'Port 5000 • Standby';
+          plannerCardStatus.textContent = 'Vercel • Standby';
         }
       }
 
