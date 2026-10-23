@@ -1236,3 +1236,31 @@ window.executeInstantCheckout = executeInstantCheckout;
 window.openCampusModal = openCampusModal;
 window.closeCampusModal = closeCampusModal;
 window.submitCampusInquiry = submitCampusInquiry;
+
+
+/**
+ * Mobile Navigation Drawer Toggle
+ */
+function toggleMobileNav() {
+  const drawer = document.getElementById('nav-mobile-drawer');
+  const icon = document.getElementById('mobile-toggle-icon');
+  if (!drawer) return;
+  const isOpen = drawer.classList.toggle('open');
+  if (icon) {
+    icon.setAttribute('data-lucide', isOpen ? 'x' : 'menu');
+    if (window.lucide) window.lucide.createIcons();
+  }
+}
+
+function closeMobileNav() {
+  const drawer = document.getElementById('nav-mobile-drawer');
+  const icon = document.getElementById('mobile-toggle-icon');
+  if (drawer) drawer.classList.remove('open');
+  if (icon) {
+    icon.setAttribute('data-lucide', 'menu');
+    if (window.lucide) window.lucide.createIcons();
+  }
+}
+
+window.toggleMobileNav = toggleMobileNav;
+window.closeMobileNav = closeMobileNav;

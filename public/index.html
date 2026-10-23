@@ -57,41 +57,69 @@
        TOP NAVIGATION BAR
        ========================================================================== -->
   <nav class="suite-navbar">
-    <a href="#" class="nav-brand-link">
-      <img src="favicon.svg" alt="StudySync AI Educational Suite Logo" class="nav-brand-logo">
-      <div class="brand-text-container">
-        <span class="brand-title">Study<span>Sync</span></span>
-        <span class="brand-tagline">AI Educational Suite</span>
-      </div>
-    </a>
+    <div class="navbar-inner">
+      <!-- 1. Left: Brand Identity -->
+      <a href="#" class="nav-brand-link">
+        <img src="favicon.svg" alt="StudySync AI Educational Suite Logo" class="nav-brand-logo">
+        <div class="brand-text-container">
+          <div class="brand-title-row">
+            <span class="brand-title">Study<span>Sync</span></span>
+            <span class="brand-version-badge">SUITE</span>
+          </div>
+          <span class="brand-tagline">AI Educational Ecosystem</span>
+        </div>
+      </a>
 
-    <!-- Center Quick Links -->
-    <ul class="nav-center-menu">
-      <li><a href="#dual-showcase" class="nav-menu-link"><i data-lucide="layers" style="width:16px; height:16px;"></i> The Suite</a></li>
-      <li><a href="#planner-section" class="nav-menu-link"><i data-lucide="calendar" style="width:16px; height:16px;"></i> AI Planner</a></li>
-      <li><a href="#classroom-section" class="nav-menu-link"><i data-lucide="school" style="width:16px; height:16px;"></i> Interactive Classroom</a></li>
-      <li><a href="#skill-radar" class="nav-menu-link"><i data-lucide="crosshair" style="width:16px; height:16px;"></i> Skill Radar</a></li>
-      <li><a href="#student-hub" class="nav-menu-link"><i data-lucide="sparkles" style="width:16px; height:16px;"></i> Student Hub</a></li>
-      <li><a href="#pricing-plans" class="nav-menu-link"><i data-lucide="credit-card" style="width:16px; height:16px;"></i> Pricing</a></li>
-    </ul>
-
-    <!-- Action Bar: Live Microservice Status & Theme Switcher -->
-    <div class="nav-actions">
-      <div class="status-pill-group" title="Real-time connectivity to both websites">
-        <a href="http://localhost:5000" target="_blank" class="service-indicator" title="StudySync Smart Study Planner">
-          <span class="pulse-dot" id="planner-status-dot"></span>
-          <span id="planner-status-text">Planner: Checking</span>
-        </a>
-        <span style="color: var(--text-muted); font-size: 0.75rem;">|</span>
-        <a href="http://localhost:5001" target="_blank" class="service-indicator" title="StudySync Interactive Classroom">
-          <span class="pulse-dot" id="classroom-status-dot"></span>
-          <span id="classroom-status-text">Classroom: Checking</span>
-        </a>
+      <!-- 2. Center: Sleek Floating Navigation Menu -->
+      <div class="nav-center-wrapper">
+        <ul class="nav-center-menu" id="nav-center-menu">
+          <li><a href="#dual-showcase" class="nav-menu-link"><i data-lucide="layers"></i><span>Suite</span></a></li>
+          <li><a href="#planner-section" class="nav-menu-link"><i data-lucide="calendar"></i><span>Planner</span></a></li>
+          <li><a href="#classroom-section" class="nav-menu-link"><i data-lucide="school"></i><span>Classroom</span></a></li>
+          <li><a href="#skill-radar" class="nav-menu-link"><i data-lucide="crosshair"></i><span>Radar</span></a></li>
+          <li><a href="#student-hub" class="nav-menu-link"><i data-lucide="sparkles"></i><span>Hub</span></a></li>
+          <li><a href="#pricing-plans" class="nav-menu-link"><i data-lucide="credit-card"></i><span>Pricing</span></a></li>
+        </ul>
       </div>
-      <button id="nav-upgrade-btn" class="nav-upgrade-cta-btn" onclick="openCheckoutModal('scholar_pro')">
-        <i data-lucide="sparkles" style="width:14px; height:14px;"></i>
-        <span id="nav-upgrade-label">Upgrade to Pro</span>
-      </button>
+
+      <!-- 3. Right: Telemetry & Actions Dock -->
+      <div class="nav-actions">
+        <!-- Compact Status Pill Group -->
+        <div class="status-pill-group" title="Live Ecosystem Microservices">
+          <a href="http://localhost:5000" target="_blank" class="service-indicator" id="planner-status-link" title="StudySync Smart Study Planner (Port 5000)">
+            <span class="pulse-dot" id="planner-status-dot"></span>
+            <span id="planner-status-text" class="status-name">Planner</span>
+          </a>
+          <span class="status-divider"></span>
+          <a href="http://localhost:5001" target="_blank" class="service-indicator" id="classroom-status-link" title="StudySync Interactive Classroom (Port 5001)">
+            <span class="pulse-dot" id="classroom-status-dot"></span>
+            <span id="classroom-status-text" class="status-name">Classroom</span>
+          </a>
+        </div>
+
+        <!-- Upgrade Pro Button -->
+        <button id="nav-upgrade-btn" class="nav-upgrade-cta-btn" onclick="openCheckoutModal('scholar_pro')">
+          <i data-lucide="sparkles" style="width:13px; height:13px;"></i>
+          <span id="nav-upgrade-label">Upgrade to Pro</span>
+        </button>
+
+        <!-- Mobile Drawer Toggle -->
+        <button class="nav-mobile-toggle" id="nav-mobile-toggle" aria-label="Toggle Navigation Menu" onclick="toggleMobileNav()">
+          <i data-lucide="menu" id="mobile-toggle-icon" style="width:18px; height:18px;"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer Dropdown -->
+    <div class="nav-mobile-drawer" id="nav-mobile-drawer">
+      <ul class="mobile-menu-list">
+        <li><a href="#dual-showcase" class="mobile-menu-link" onclick="closeMobileNav()"><i data-lucide="layers"></i> The Suite Overview</a></li>
+        <li><a href="#planner-section" class="mobile-menu-link" onclick="closeMobileNav()"><i data-lucide="calendar"></i> AI Smart Study Planner</a></li>
+        <li><a href="#classroom-section" class="mobile-menu-link" onclick="closeMobileNav()"><i data-lucide="school"></i> AI Interactive Classroom</a></li>
+        <li><a href="#skill-radar" class="mobile-menu-link" onclick="closeMobileNav()"><i data-lucide="crosshair"></i> Academic Skill Radar</a></li>
+        <li><a href="#student-hub" class="mobile-menu-link" onclick="closeMobileNav()"><i data-lucide="sparkles"></i> Student Interest Hub</a></li>
+        <li><a href="#pricing-plans" class="mobile-menu-link" onclick="closeMobileNav()"><i data-lucide="credit-card"></i> Transparent Pricing</a></li>
+      </ul>
     </div>
   </nav>
 
