@@ -77,7 +77,7 @@
     <!-- Action Bar: Live Microservice Status & Theme Switcher -->
     <div class="nav-actions">
       <div class="status-pill-group" title="Real-time connectivity to both websites">
-        <a href="https://studysync2-virid.vercel.app" target="_blank" class="service-indicator" title="StudySync Smart Study Planner">
+        <a href="http://localhost:5000" target="_blank" class="service-indicator" title="StudySync Smart Study Planner">
           <span class="pulse-dot" id="planner-status-dot"></span>
           <span id="planner-status-text">Planner: Checking</span>
         </a>
@@ -151,7 +151,7 @@
     <div class="dual-sections-grid" id="dual-sections-container">
 
       <!-- ==========================================
-           SECTION 1: AI SMART STUDY PLANNER (Vercel)
+           SECTION 1: AI SMART STUDY PLANNER (Port 5000)
            ========================================== -->
       <section class="portal-section-card section-planner spotlight-card" id="planner-section">
         <!-- Top Bar -->
@@ -161,7 +161,7 @@
           </span>
           <div class="live-port-tag">
             <span class="pulse-dot" id="card-planner-dot"></span>
-            <span id="card-planner-status">Vercel • Checking</span>
+            <span id="card-planner-status">Port 5000 • Standby</span>
           </div>
         </div>
 
@@ -384,18 +384,18 @@
 
         <!-- Clickable Action Buttons -->
         <div class="section-actions-grid">
-          <a href="https://studysync2-virid.vercel.app" target="_blank" class="btn-primary-launch" id="btn-launch-planner">
+          <a href="http://localhost:5000" target="_blank" class="btn-primary-launch" id="btn-launch-planner">
             <span>Launch AI Smart Study Planner</span>
             <i data-lucide="arrow-up-right" style="width:20px; height:20px;"></i>
           </a>
           <div class="sub-links-row">
-            <a href="https://studysync2-virid.vercel.app/dashboard.html" target="_blank" class="sub-link-chip">
+            <a href="http://localhost:5000/dashboard.html" target="_blank" class="sub-link-chip">
               <i data-lucide="layout-dashboard" style="width:14px; height:14px;"></i> Student Dashboard
             </a>
-            <a href="https://studysync2-virid.vercel.app/dashboard.html#focus" target="_blank" class="sub-link-chip">
+            <a href="http://localhost:5000/dashboard.html#focus" target="_blank" class="sub-link-chip">
               <i data-lucide="headphones" style="width:14px; height:14px;"></i> Focus Room
             </a>
-            <a href="https://studysync2-virid.vercel.app/auth.html" target="_blank" class="sub-link-chip">
+            <a href="http://localhost:5000/auth.html" target="_blank" class="sub-link-chip">
               <i data-lucide="user-check" style="width:14px; height:14px;"></i> Sign In / Register
             </a>
           </div>
@@ -682,7 +682,7 @@
             <span>Looking for self-paced syllabus planning & deep focus?</span>
           </div>
           <button class="btn-quick-switch" data-target="planner">
-            <span>Explore Smart Study Planner (Vercel)</span>
+            <span>Explore Smart Study Planner (Port 5000)</span>
             <i data-lucide="arrow-right" style="width:14px; height:14px;"></i>
           </button>
         </div>

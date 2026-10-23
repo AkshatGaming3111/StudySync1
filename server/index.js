@@ -44,7 +44,7 @@ app.listen(PORT, () => {
   console.log('🎓 StudySync – AI Educational Suite Central Index Portal');
   console.log(`🌐 Server active on: http://localhost:${PORT}`);
   console.log(`📡 Suite Health Endpoint: http://localhost:${PORT}/health`);
-  console.log(`🔗 Target Website 1 (Planner):   ${process.env.PLANNER_URL || 'https://studysync2-virid.vercel.app'}`);
+  console.log(`🔗 Target Website 1 (Planner):   ${process.env.PLANNER_URL || 'http://localhost:5000'}`);
   console.log(`🔗 Target Website 2 (Classroom): ${process.env.CLASSROOM_URL || 'http://localhost:5001'}`);
   console.log('================================================================');
 });

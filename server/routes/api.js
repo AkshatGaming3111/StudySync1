@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { checkEndpointHealth } = require('../services/healthChecker');
 
-const PLANNER_URL = process.env.PLANNER_URL || 'https://studysync2-virid.vercel.app';
+const PLANNER_URL = process.env.PLANNER_URL || 'http://localhost:5000';
 const CLASSROOM_URL = process.env.CLASSROOM_URL || 'http://localhost:5001';
 
 // 1. Live Status of both websites
@@ -25,12 +25,12 @@ router.get('/status', async (req, res) => {
         planner: {
           name: 'StudySync – AI Smart Study Planner',
           url: PLANNER_URL,
-          port: PLANNER_URL.includes('localhost') ? 5000 : 'Vercel Cloud',
+          port: 5000,
           online: plannerHealth.online,
           latencyMs: plannerHealth.latencyMs,
           statusMessage: plannerHealth.message,
           directLinks: {
-            home: PLANNER_URL,
+            home: `${PLANNER_URL}/index.html`,
             dashboard: `${PLANNER_URL}/dashboard.html`,
             focusRoom: `${PLANNER_URL}/dashboard.html#focus`,
             planner: `${PLANNER_URL}/dashboard.html#planner`,
@@ -70,7 +70,7 @@ router.get('/suite-info', (req, res) => {
         badge: 'Self-Paced Mastery & Deep Focus',
         themeColor: '#38bdf8',
         accentColor: '#6366f1',
-        hosting: 'Vercel Cloud',
+        defaultPort: 5000,
         url: PLANNER_URL,
         description: 'An AI-powered academic command center designed to optimize student focus, automate syllabus planning into micro-tasks, enforce deep work sessions with ambient audio, and eliminate digital distractions.',
         highlights: [
